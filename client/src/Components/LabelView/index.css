@@ -1,0 +1,9 @@
+/* LabelView.css */
+.label-selector {
+    margin-bottom: 20px;
+  }
+  
+  .label-selector select {
+    padding: 10px;
+    font-size: 16px;
+  }

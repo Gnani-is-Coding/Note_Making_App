@@ -26,7 +26,7 @@ const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded.user;
-    console.log(decoded.user, "decoded")
+    console.log(decoded.user, "user ID")
     next();
   } catch (err) {
     res.status(401).json({ message: 'Token is not valid' });
@@ -121,9 +121,10 @@ app.post('/api/notes', auth, async (req, res) => {
   }
 });
 
-// Get all notes for a user
+// Get all notes for a user of userID(from Token)
 app.get('/api/notes/:id', auth, async (req, res) => {
   try {
+    console.log("get req")
     const notes = await Note.find({ user: req.user.id, isDeleted: false }).sort({ createdAt: -1 });
     res.json(notes);
   } catch (err) {
@@ -132,16 +133,17 @@ app.get('/api/notes/:id', auth, async (req, res) => {
   }
 });
 
-// Update a note
+// Update a note by noteID
 app.put('/api/notes/:id', auth, async (req, res) => {
   try {
     const { title, content, tags, color, isArchived } = req.body;
-
+    // console.log(req.params.id)
     let note = await Note.findById(req.params.id);
     console.log(note, "stored note")
     if (!note) return res.status(404).json({ message: 'Note not found' });
 
     //We are getting user from payload of jwtToken
+    //Cond-2 whether note author is requesting for update ?
     if (note.user.toString() !== req.user.id) return res.status(401).json({ message: 'Not authorized' });
 
     note.title = title;
@@ -153,6 +155,7 @@ app.put('/api/notes/:id', auth, async (req, res) => {
 
     await note.save();
     res.json(note);
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -163,12 +166,17 @@ app.put('/api/notes/:id', auth, async (req, res) => {
 app.delete('/api/notes/:id', auth, async (req, res) => {
   try {
     let note = await Note.findById(req.params.id);
+    // console.log(note, "note in db")
+
     if (!note) return res.status(404).json({ message: 'Note not found' });
+    //Is the guy who wants to DELETE this, is the one created this ?
     if (note.user.toString() !== req.user.id) return res.status(401).json({ message: 'Not authorized' });
 
     note.isDeleted = true;
     note.deletedAt = Date.now();
+    console.log(note, "note after deleting")
     await note.save();
+
     res.json({ message: 'Note moved to trash' });
   } catch (err) {
     console.error(err.message);
@@ -177,15 +185,22 @@ app.delete('/api/notes/:id', auth, async (req, res) => {
 });
 
 // Get trashed notes
-app.get('/api/notes/trash', auth, async (req, res) => {
+app.get('/api/trash', auth, async (req, res) => {
   try {
+    //30 days, 24hrs, 60mins, 60secs, 1000 ms
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    console.log(new Date(), thirtyDaysAgo, "time")
+
     const trashedNotes = await Note.find({
       user: req.user.id,
       isDeleted: true,
       deletedAt: { $gte: thirtyDaysAgo }
     }).sort({ deletedAt: -1 });
+
+    console.log(trashedNotes, "deleted note")
+
     res.json(trashedNotes);
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -219,6 +234,7 @@ app.get('/api/notes/tag/:tag', auth, async (req, res) => {
       isDeleted: false,
       tags: req.params.tag
     }).sort({ updatedAt: -1 });
+    
     res.json(notes);
   } catch (err) {
     console.error(err.message);

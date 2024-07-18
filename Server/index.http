@@ -13,30 +13,47 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/api/login
 Content-Type: application/json
+
 {
-    "email":"gnani@gmail.com",
+    "email":"demo",
     "password":"1234"
 }
 
 ###
 POST http://localhost:3000/api/notes
-Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMDY5Nn0.aIaOEPm3pJF-HNjC5k9gU_nu7qBunrIOPmXiNf5uwbw
 Content-Type: application/json
 
 {
-    "title": "Company",
-    "content": "Should start a Company",
-    "tags": "Important"
+    "title": "Drink Water",
+    "content": "This is remind me to drink Water",
+    "tags": ["Health", "Life"],
+    "color": "#2efe" 
 }
 ###
-GET http://localhost:3000/api/notes/6698ea0812a4f16c63fc4510
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
+GET http://localhost:3000/api/notes/669901402a61dda2433ea12c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
 Content-Type: application/json
+
 ###
-PUT http://localhost:3000/api/notes/:id
+PUT http://localhost:3000/api/notes/669909e0708a2c2c0370f018
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
 Content-Type: application/json
 
 {
-    color: "black"
+    "color": "black"
 }
+###
+DELETE http://localhost:3000/api/notes/66991eaa5d9fd38de2bef57f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/trash
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMxMjU0Nn0.7HcTQIhG8YNB9fSd_3jXifyt_SaAyzLXKoyIv2_Y2AM
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/trash 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
+# Content-Type: application/json

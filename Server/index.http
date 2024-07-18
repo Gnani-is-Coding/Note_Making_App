@@ -3,8 +3,40 @@ GET http://localhost:3000/users
 Content-Type: application/json
 
 ###
-POST localhost:3000/users/register
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
 {
-    "username":"Gnani",
+    "email":"demo",
     "password": "1234"
+}
+###
+POST http://localhost:3000/api/login
+Content-Type: application/json
+{
+    "email":"gnani@gmail.com",
+    "password":"1234"
+}
+
+###
+POST http://localhost:3000/api/notes
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
+Content-Type: application/json
+
+{
+    "title": "Company",
+    "content": "Should start a Company",
+    "tags": "Important"
+}
+###
+GET http://localhost:3000/api/notes/6698ea0812a4f16c63fc4510
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
+Content-Type: application/json
+###
+PUT http://localhost:3000/api/notes/:id
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OGVhMDgxMmE0ZjE2YzYzZmM0NTEwIn0sImlhdCI6MTcyMTMwMzY5NX0.yp0n750U8NgwE8fEkk8-MJHFDkrZqEUD62aDQRRaQ2c
+Content-Type: application/json
+
+{
+    color: "black"
 }

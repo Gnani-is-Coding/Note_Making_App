@@ -1,6 +1,8 @@
 .note-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex;
+    /* grid-template-rows: repeat(2, 150px);
+    grid-template-columns: repeat(2, 200px); */
+    flex-wrap: wrap;
     gap: 20px;
   }
   
@@ -9,6 +11,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
+
   
   .note h3 {
     margin-top: 0;
@@ -28,4 +31,26 @@
     font-size: 12px;
     margin-right: 5px;
     margin-bottom: 5px;
+  }
+  
+
+
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .icon-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  @media screen and (min-width: 879px) {
+    .note-list {
+    grid-template-columns: repeat(3, 200px);
+    }
   }

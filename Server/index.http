@@ -7,8 +7,8 @@ POST http://localhost:3000/api/register
 Content-Type: application/json
 
 {
-    "name": "User 1",
-    "email":"demo2",
+    "name": "User22",
+    "email":"gg@gmail.com",
     "password": "1234"
 }
 ###
@@ -16,7 +16,7 @@ POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-    "email":"demo",
+    "email":"gg@gmail.com",
     "password":"1234"
 }
 
@@ -26,14 +26,14 @@ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoi
 Content-Type: application/json
 
 {
-    "title": "Drink Water",
-    "content": "This is remind me to drink Water",
+    "title": "Task Water",
+    "content": "drink Water",
     "tags": ["Health", "Life"],
     "color": "#2efe" 
 }
 ###
 GET http://localhost:3000/api/notes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OWYwMDE1YjgyMDg0MTI3OTFhODIzIn0sImlhdCI6MTcyMTM3MjQ5NX0.IcJAUHx0vgBZMLZWbf123VarN5Wuym12MG7-8LnoPgs
 Content-Type: application/json
 
 ###
@@ -46,6 +46,11 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:3000/api/notes/66991eaa5d9fd38de2bef57f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/notes/search?query=drink 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
 Content-Type: application/json
 

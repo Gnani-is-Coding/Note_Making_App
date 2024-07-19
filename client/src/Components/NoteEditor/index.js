@@ -5,7 +5,7 @@ function NoteEditor({ onCreateNote }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tags, setTags] = useState([]);
-  const [color, setColor] = useState('black');
+  const [color, setColor] = useState('#afefef');
 
   const handleSubmit = (e) => {
     e.preventDefault();

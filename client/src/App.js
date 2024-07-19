@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     getNotesFromDB();
-  }, []);
+  }, [isAuthenticated]);
 
   const getNotesFromDB = async () => {
     try {
@@ -51,18 +51,49 @@ function App() {
     }
   };
 
+  const onDelete = async(id) => {
+    const url = `http://localhost:3000/api/notes/${id}`
+    const jwtToken = Cookies.get("jwt_token")
+
+    const options = {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+
+    const response = await fetch(url, options)
+    const data = await response.json()
+    console.log(data, "data")
+
+    if (response.ok) {
+      getNotesFromDB()
+    }
+    else {
+      console.log("Error", data)
+    }
+  }
+
+  const onArchive =() => {
+
+  }
+
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    // TODO: Implement logout logic
+
+    Cookies.remove("jwt_token")
     setIsAuthenticated(false);
   };
 
   const handleCreateNote = async (note) => {
+
     const url = "http://localhost:3000/api/notes"
     const jwtToken = Cookies.get("jwt_token")
+
     const options = {
       method: "POST",
       headers: {
@@ -71,19 +102,23 @@ function App() {
       },
       body : JSON.stringify(note)
     }
-    console.log(options, "options")
+
+    // console.log(options, "options")
     
     const response = await fetch(url, options)
     const data = await response.json()
 
     if (response.ok) {
-      console.log(data, "data")
+      // console.log(data, "data")
+
       getNotesFromDB()
     } else {
       console.log("Error", data)
     }
     
   };
+
+  console.log(notes, "notes")
 
   return (
     <BrowserRouter>
@@ -120,14 +155,14 @@ function App() {
           <>
             <Route path="/" element={
               <>
-                <NoteList notes={notes} />
+                <NoteList notes={notes} onDelete={onDelete} onArchive={onArchive} />
                 <NoteEditor onCreateNote={handleCreateNote} />
               </>
             } />
             <Route path="/search" element={<Search notes={notes} />} />
             <Route path="/labels" element={<LabelView notes={notes} />} />
             <Route path="/archived" element={<ArchivedNotes notes={notes.filter(note => note.archived)} />} />
-            <Route path="/trash" element={<TrashNotes notes={notes.filter(note => note.deleted)} />} />
+            <Route path="/trash" element={<TrashNotes/>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (

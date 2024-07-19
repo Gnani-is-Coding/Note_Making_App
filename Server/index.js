@@ -124,9 +124,10 @@ app.post('/api/notes', auth, async (req, res) => {
 // Get all notes for a user of userID(from Token)
 app.get('/api/notes', auth, async (req, res) => {
   try {
-    console.log("get req")
+    console.log("get req", req.user.id)
     const notes = await Note.find({ user: req.user.id, isDeleted: false }).sort({ createdAt: -1 });
     res.json(notes);
+    
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -210,7 +211,8 @@ app.get('/api/trash', auth, async (req, res) => {
 // Search notes
 app.get('/api/notes/search', auth, async (req, res) => {
   try {
-    const searchTerm = req.query.term;
+    console.log(req.query.query, "req.query.term")
+    const searchTerm = req.query.query;
     const notes = await Note.find({
       user: req.user.id,
       isDeleted: false,

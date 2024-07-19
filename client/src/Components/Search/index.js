@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import NoteList from '../NoteList';
+import Cookies from 'js-cookie'
 import './index.css';
 
 function Search({ notes }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
 
-    const results = notes.filter(
-      (note) =>
-        note.title.toLowerCase().includes(term) ||
-        note.content.toLowerCase().includes(term) ||
-        note.tags.some((tag) => tag.toLowerCase().includes(term))
-    );
+        const url = `http://localhost:3000/api/notes/search?query=${term}`;
+        const jwtToken = Cookies.get("jwt_token");
 
-    setSearchResults(results);
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            authorization: `Bearer ${jwtToken}`
+          }
+        };
+  
+        const response = await fetch(url, options);
+        const data = await response.json();
+        console.log(data, "search data")
+  
+        if (response.ok) {
+          setSearchResults(data)
+        } else {
+          throw new Error(data.message || 'Failed to fetch notes');
+        }
+  
+
+    
   };
 
   return (
@@ -28,7 +44,10 @@ function Search({ notes }) {
         value={searchTerm}
         onChange={handleSearch}
       />
-      <NoteList notes={searchResults.length > 0 ? searchResults : notes} />
+
+      
+      <NoteList notes={searchTerm.length > 0 ?  searchResults: notes} />
+
     </div>
   );
 }

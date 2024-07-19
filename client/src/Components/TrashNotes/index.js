@@ -10,7 +10,7 @@ function TrashNotes({ notes }) {
 
     const getTrashNotes = async() => {
 
-      const url = `http://localhost:3000/api/trash`
+      const url = `https://note-making-app-backend.onrender.com/api/trash`
       const jwtToken = Cookies.get("jwt_token")
   
       const options = {
@@ -21,7 +21,7 @@ function TrashNotes({ notes }) {
         }
       }
       
-      console.log(options)
+      // console.log(options)
       const response = await fetch(url, options)
       const data = await response.json()
       console.log(data, "data")

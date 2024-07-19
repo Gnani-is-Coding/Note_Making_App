@@ -28,7 +28,7 @@ function App() {
 
   const getNotesFromDB = async () => {
     try {
-      const url = "http://localhost:3000/api/notes";
+      const url = "https://note-making-app-backend.onrender.com/api/notes";
       const jwtToken = Cookies.get("jwt_token");
       const options = {
         method: "GET",
@@ -52,7 +52,7 @@ function App() {
   };
 
   const onDelete = async(id) => {
-    const url = `http://localhost:3000/api/notes/${id}`
+    const url = `https://note-making-app-backend.onrender.com/api/notes/${id}`
     const jwtToken = Cookies.get("jwt_token")
 
     const options = {
@@ -91,7 +91,7 @@ function App() {
 
   const handleCreateNote = async (note) => {
 
-    const url = "http://localhost:3000/api/notes"
+    const url = "https://note-making-app-backend.onrender.com/api/notes"
     const jwtToken = Cookies.get("jwt_token")
 
     const options = {

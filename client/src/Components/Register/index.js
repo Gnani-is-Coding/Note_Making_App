@@ -28,7 +28,7 @@ function Register({onLogin}) {
       body: JSON.stringify({name, email, password})
     }
     
-    const url = "http://localhost:3000/api/register"
+    const url = "https://note-making-app-backend.onrender.com/api/register"
     try {
       const response = await fetch(url, options)
       const jwtToken = await response.json()

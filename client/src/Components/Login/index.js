@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "http://localhost:3000/api/login"
+    const url = "https://note-making-app-backend.onrender.com/api/login"
     const options = {
       method: 'POST',
       headers : {

@@ -11,7 +11,7 @@ function Search({ notes }) {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
 
-        const url = `http://localhost:3000/api/notes/search?query=${term}`;
+        const url = `https://note-making-app-backend.onrender.com/api/notes/search?query=${term}`;
         const jwtToken = Cookies.get("jwt_token");
 
         const options = {

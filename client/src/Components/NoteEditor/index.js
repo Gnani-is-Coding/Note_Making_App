@@ -5,7 +5,7 @@ function NoteEditor({ onCreateNote }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tags, setTags] = useState([]);
-  const [color, setColor] = useState('#ffffff');
+  const [color, setColor] = useState('black');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,12 +40,13 @@ function NoteEditor({ onCreateNote }) {
         <input
           type="text"
           placeholder="Add tag (press Enter)"
-          onKeyPress={handleAddTag}
+          onKeyDown={handleAddTag}
         />
         <input
           type="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
+          style={{width: '50px'}}
         />
         <button type="submit">Save</button>
       </div>

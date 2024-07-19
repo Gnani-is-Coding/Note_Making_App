@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Link, Routes, Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie' 
 import './App.css';
 
 // Placeholder components (to be implemented)
@@ -21,6 +22,35 @@ function App() {
     // If authenticated, fetch notes from the server
   }, []);
 
+  useEffect(() => {
+    getNotesFromDB();
+  }, []);
+
+  const getNotesFromDB = async () => {
+    try {
+      const url = "http://localhost:3000/api/notes";
+      const jwtToken = Cookies.get("jwt_token");
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${jwtToken}`
+        }
+      };
+
+      const response = await fetch(url, options);
+      const data = await response.json();
+
+      if (response.ok) {
+        setNotes(data);
+      } else {
+        throw new Error(data.message || 'Failed to fetch notes');
+      }
+    } catch (err) {
+      console.log(err.message)
+    }
+  };
+
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
@@ -30,9 +60,29 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  const handleCreateNote = (note) => {
-    // TODO: Implement create note logic
-    setNotes([...notes, note]);
+  const handleCreateNote = async (note) => {
+    const url = "http://localhost:3000/api/notes"
+    const jwtToken = Cookies.get("jwt_token")
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        authorization: `Bearer ${jwtToken}`
+      },
+      body : JSON.stringify(note)
+    }
+    console.log(options, "options")
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+
+    if (response.ok) {
+      console.log(data, "data")
+      getNotesFromDB()
+    } else {
+      console.log("Error", data)
+    }
+    
   };
 
   return (

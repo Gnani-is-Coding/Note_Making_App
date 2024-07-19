@@ -122,7 +122,7 @@ app.post('/api/notes', auth, async (req, res) => {
 });
 
 // Get all notes for a user of userID(from Token)
-app.get('/api/notes/:id', auth, async (req, res) => {
+app.get('/api/notes', auth, async (req, res) => {
   try {
     console.log("get req")
     const notes = await Note.find({ user: req.user.id, isDeleted: false }).sort({ createdAt: -1 });

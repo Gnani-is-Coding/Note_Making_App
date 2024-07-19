@@ -32,7 +32,7 @@ Content-Type: application/json
     "color": "#2efe" 
 }
 ###
-GET http://localhost:3000/api/notes/669901402a61dda2433ea12c
+GET http://localhost:3000/api/notes
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY5OTAxNDAyYTYxZGRhMjQzM2VhMTJjIn0sImlhdCI6MTcyMTMxMjU5MH0.8PxT7hz_XAlEpTrv1DeOiVfZV5n17VJQR7H5DySjieo
 Content-Type: application/json
 

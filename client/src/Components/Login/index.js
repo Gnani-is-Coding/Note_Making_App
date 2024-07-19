@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
 import './index.css';
+import Cookies from 'js-cookie'
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('') 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, you would validate the input and make an API call here
-    onLogin({ email, password });
+    const url = "http://localhost:3000/api/login"
+    const options = {
+      method: 'POST',
+      headers : {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({email,password})
+    }
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    if (response.ok) {
+      const jwtToken = data.token 
+      console.log(jwtToken, "token")
+      Cookies.set("jwt_token", data.token, {expires: 7})
+      onLogin();
+    }
+    else {
+      setError(data.message)
+      console.log("Error", data.message)
+    }
+    
   };
 
   return (
@@ -29,6 +51,7 @@ function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {error && <p className="error">{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

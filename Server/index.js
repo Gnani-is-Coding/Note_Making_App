@@ -52,16 +52,16 @@ app.get("/users", async(req,res) => {
 //Register New user
 app.post('/api/register', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name} = req.body;
 
     let user = await User.findOne({ email });
-  
+    console.log(email, password, name, user, "user")
     if (user) return res.status(400).json({ message: 'User already exists' });
 
     const saltString = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, saltString);
 
-    user = new User({ email, password: hashedPassword });
+    user = new User({ name, email, password: hashedPassword });
     await user.save();
 
     const payload = { user: { id: user.id } };

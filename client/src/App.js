@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 
 // Placeholder components (to be implemented)
@@ -21,8 +21,7 @@ function App() {
     // If authenticated, fetch notes from the server
   }, []);
 
-  const handleLogin = (credentials) => {
-    // TODO: Implement login logic
+  const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
@@ -59,20 +58,34 @@ function App() {
         </header>
 
         <main>
-          <Routes>
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/register" element={<Register />} />
-            {isAuthenticated && (
+      <Routes>
+        <Route path="/login" element={
+          isAuthenticated ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />
+        } />
+        <Route path="/register" element={
+          isAuthenticated ? <Navigate to="/" replace /> : <Register onLogin={handleLogin} />
+        } />
+        
+        {isAuthenticated ? (
+          <>
+            <Route path="/" element={
               <>
-                <Route path="/" element={<><NoteList notes={notes} /><NoteEditor onCreateNote={handleCreateNote} /></>} />
-                <Route path="/search" element={<Search notes={notes} />} />
-                <Route path="/labels" element={<LabelView notes={notes} />} />
-                <Route path="/archived" element={<ArchivedNotes notes={notes.filter(note => note.archived)} />} />
-                <Route path="/trash" element={<TrashNotes notes={notes.filter(note => note.deleted)} />} />
+                <NoteList notes={notes} />
+                <NoteEditor onCreateNote={handleCreateNote} />
               </>
-            )}
-          </Routes>
+            } />
+            <Route path="/search" element={<Search notes={notes} />} />
+            <Route path="/labels" element={<LabelView notes={notes} />} />
+            <Route path="/archived" element={<ArchivedNotes notes={notes.filter(note => note.archived)} />} />
+            <Route path="/trash" element={<TrashNotes notes={notes.filter(note => note.deleted)} />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </>
+        ) : (
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        )}
+      </Routes>
         </main>
+
       </div>
     </BrowserRouter>
   );
